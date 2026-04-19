@@ -12,15 +12,16 @@ class GetuseridController extends Controller
 {
     public function getUserbydid(string $id) {
         if (Auth::guard('sanctum')->check()) {
-            
-            // Caches the user for 1 hour (3600 seconds)
+
+          $userdata = User::find($id);
+        // Caches the user for 1 hour (3600 seconds)
             $user = Cache::remember("user_{$id}", 3600, function () use ($id) {
                 return User::find($id);
             });
 
             return response()->json([
                 'message' => 'User Authenticated Successfully.',
-                'user' => $user
+                'user' => $userdata
             ], 200);
 
         } else {

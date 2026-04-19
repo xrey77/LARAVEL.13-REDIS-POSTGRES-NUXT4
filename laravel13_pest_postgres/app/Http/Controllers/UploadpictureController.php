@@ -9,9 +9,9 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class UploadpictureController extends Controller
 {
-    public function updateProfilepicture(Request $request, ?int $id) 
+    public function updateProfilepicture(Request $request) 
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
         if (!$user) {
             return response()->json(['message' => 'User not found...'], 404);
         }
@@ -19,23 +19,60 @@ class UploadpictureController extends Controller
         if ($request->hasFile('profilepic')) {
             $file = $request->file('profilepic');
             $ext = $file->guessExtension(); 
-            $newfile = '00' . $id . '.' . $ext;
+            // FIX: Use $request->id instead of undefined $id
+            $newfile = '00' . $request->id . '.' . $ext;
+            $path = public_path('users/' . $newfile);
 
             // Image processing
-            $img = Image::decode($file);
+            $img = Image::read($file); // Use read() for Intervention V3
             $img->resize(100, 100);
-        
-            $file->move(public_path('users'), $newfile);
+            
+            // FIX: Save the processed image directly to the final path
+            $img->save($path);
             
             // Update Database
             $user->profilepic = "users/" . $newfile;
             $user->save();
 
-            Cache::forget("user_profile_{$id}");
+            Cache::forget("user_profile_{$request->id}");
             
-            return response()->json(['message' => 'New picture has been uploaded successfully.'], 200);
+            return response()->json([
+                'message' => 'New picture has been uploaded successfully.',
+                'profilepic' => $newfile
+            ], 200);
         }
 
         return response()->json(['message' => 'Image not found.'], 404);
-    }    
+    }
+
+
+//     public function updateProfilepicture(Request $request) 
+//     {
+//         $user = User::find($request->id);
+//         if (!$user) {
+//             return response()->json(['message' => 'User not found...'], 404);
+//         }
+
+//         if ($request->hasFile('profilepic')) {
+//             $file = $request->file('profilepic');
+//             $ext = $file->guessExtension(); 
+//             $newfile = '00' . $id . '.' . $ext;
+
+//             // Image processing
+//             $img = Image::decode($file);
+//             $img->resize(100, 100);
+        
+//             $file->move(public_path('users'), $newfile);
+            
+//             // Update Database
+//             $user->profilepic = "users/" . $newfile;
+//             $user->save();
+
+//             Cache::forget("user_profile_{$id}");
+            
+//             return response()->json(['message' => 'New picture has been uploaded successfully.'], 200);
+//         }
+
+//         return response()->json(['message' => 'Image not found.'], 404);
+//     }    
 }
