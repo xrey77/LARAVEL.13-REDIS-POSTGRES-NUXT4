@@ -25,6 +25,18 @@ class Product extends Model
     public function category() {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    // protected static function booted()
+    // {
+    //     static::saved(function ($product) {
+    //         // Clear the specific product PDF
+    //         Cache::forget("product_report_{$product->id}");
+    //         // Clear the main list PDF if you have one
+    //         Cache::forget('product_report_pdf');
+    //     });
+    // }
+
+
 }
 
 

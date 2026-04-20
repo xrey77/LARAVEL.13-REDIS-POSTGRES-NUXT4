@@ -15,8 +15,8 @@ class Sale extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'amount',
-        'date'
+        'salesamount',
+        'salesdate'
     ];
     
 }

@@ -12,10 +12,8 @@ class PdfController extends Controller
 {    
     public function generatePdf()
     {
-        // Define a unique cache key
         $cacheKey = 'product_report_pdf';
         
-        // Cache for 60 minutes (3600 seconds)
         $pdfContent = Cache::remember($cacheKey, 3600, function () {
             $products = Product::all();        
             
@@ -34,6 +32,7 @@ class PdfController extends Controller
             'Content-Disposition' => 'inline; filename="product_report.pdf"'
         ]);
     }
+
 }
 
 

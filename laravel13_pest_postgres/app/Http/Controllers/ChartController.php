@@ -21,7 +21,7 @@ class ChartController extends Controller
             return $sales->map(fn($sale) => [
                 'salesamount' => $sale->salesamount,
                 'salesdate' => $sale->salesdate
-            ]);
+            ])->toArray();
         });
 
         if (!$salesData) {

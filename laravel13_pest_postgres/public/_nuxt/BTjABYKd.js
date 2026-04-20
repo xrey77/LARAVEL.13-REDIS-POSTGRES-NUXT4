@@ -1,0 +1,1 @@
+import{_ as e,o,c as t}from"./DaieffW7.js";const r={},c={class:"text-center fixed-bottom footer-size mb-3"};function s(n,_){return o(),t("div",c,"Copyright 2025, All rights reserved. World Taekwondo")}const d=e(r,[["render",s]]);export{d as default};

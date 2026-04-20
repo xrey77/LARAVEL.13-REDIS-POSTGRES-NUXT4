@@ -1,0 +1,1 @@
+{"version":3,"file":"BTjABYKd.js","sources":["../../../app/layouts/Footer.vue"],"sourcesContent":["<template>\n    <div class=\"text-center fixed-bottom footer-size mb-3\">Copyright 2025, All rights reserved. World Taekwondo</div>\n</template>"],"names":["_hoisted_1","_createElementBlock"],"mappings":"sDACSA,EAAA,CAAA,MAAM,2CAA2C,6BAAtDC,EAAiH,MAAjHD,EAAuD,sDAAoD"}
