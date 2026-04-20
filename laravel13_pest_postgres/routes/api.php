@@ -14,9 +14,9 @@ use App\Http\Controllers\ActivatemfaController;
 use App\Http\Controllers\UpdateprofileController;
 
 use App\Http\Controllers\AddproductController;
-use App\Http\Controllers\ProductlistController;
+use App\Http\Controllers\ProductListController;
 use App\Http\Controllers\ProductsearchController;
-
+use App\Http\Controllers\ProductbycategoryController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\PdfController;
 
@@ -28,7 +28,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/getuserid/{id}', [GetuseridController::class, 'getUserbydid']);
 Route::get('/getallusers', [GetusersController::class, 'getAllusers']);
-Route::post('/uploadpicture/{id}', [UploadpictureController::class, 'updateProfilepicture']);
+Route::post('/uploadpicture', [UploadpictureController::class, 'updateProfilepicture']);
 Route::patch('/updateprofile/{id}', [UpdateprofileController::class, 'updateUser']);
 
 Route::patch('/otpvalidation/{id}', [MfavalidationController::class, 'validateOtp']);
@@ -37,8 +37,8 @@ Route::patch('/activatemfa/{id}', [ActivatemfaController::class, 'enableMfa']);
 Route::delete('/deleteuser/{id}', [DeleteuserController::class, 'deleteUser']);
 
 Route::post('/addproduct', [AddproductController::class, 'addProduct']);
-Route::get('/productlist/{page}', [ProductlistController::class, 'listProducts']);
-Route::get('/productsearch/{key}', [ProductsearchController::class, 'productSearch']);
+Route::get('/listproducts/{page?}', [ProductListController::class, 'listProducts']);
+Route::get('/productsearch/{page}/{key}', [ProductsearchController::class, 'productSearch']);
 Route::get('/productbycategory', [ProductbycategoryController::class, 'generateCategoryReport']);
 
 Route::get('/chartdata', [ChartController::class, 'generateChart']);

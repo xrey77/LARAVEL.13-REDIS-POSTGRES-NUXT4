@@ -19,19 +19,13 @@ class UploadpictureController extends Controller
         if ($request->hasFile('profilepic')) {
             $file = $request->file('profilepic');
             $ext = $file->guessExtension(); 
-            // FIX: Use $request->id instead of undefined $id
             $newfile = '00' . $request->id . '.' . $ext;
-            $path = public_path('users/' . $newfile);
 
-            // Image processing
-            $img = Image::read($file); // Use read() for Intervention V3
-            $img->resize(100, 100);
-            
-            // FIX: Save the processed image directly to the final path
-            $img->save($path);
-            
-            // Update Database
-            $user->profilepic = "users/" . $newfile;
+            $img = Image::decode($file);
+            $img->resize(100, 100);        
+            $file->move(public_path('users'), $newfile);
+
+            $user->profilepic = $newfile;
             $user->save();
 
             Cache::forget("user_profile_{$request->id}");
